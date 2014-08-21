@@ -78,7 +78,7 @@ class Response {
         $self->log = Logger::getInstance()->get();
         switch ($format) {
             default: // O formato padrão de saída é json
-                header('Content-type: aplication/json');
+                // header('Content-type: aplication/json');
                 echo json_encode(self::getInstance());
                 break;
         }

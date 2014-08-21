@@ -30,7 +30,7 @@ class LogModule {
     }
 
     public static function log($text = '', $tipo = 'LOG', $dateFormat = 'd-m-Y H:i:s') {
-        $logFile = DIR_RAIZ . '/logs/access.' . date('Ymd') . '.txt';
+        $logFile = DIR_RAIZ . '/www/logs/access.' . date('Ymd') . '.txt';
         $fp = fopen($logFile, 'a');
 
         if (!is_resource($fp)) {

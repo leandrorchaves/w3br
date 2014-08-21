@@ -1,15 +1,31 @@
 <?php
 
 class AclController {
-
+    public function actionAction($url){
+        $query = Doctrine_Query::create()
+            ->from('Model_Usuarios u')
+            ->leftJoin("u.AclPapel p")
+            ->leftJoin("p.AclPapelPermissao pp")
+            ->leftJoin("pp.AclPermissao pe")
+            ->leftJoin("pe.AclPermissaoAction pa")
+            ->leftJoin("pa.AclAction a")
+            ->leftJoin("pe.AclPermissaoMenu pm")
+            ->leftJoin("pm.AclMenu m")
+            ->where("(a.nome = ? or m.janela = ?)", Array($_REQUEST['action'],$_REQUEST['action']))
+            ->andWhere('u.id = ?', $_SESSION[APPLICATIONID]['usuarioid'])
+            ->count();
+            // ->execute(Doctrine_Core::HYDRATE_SINGLE_SCALAR);
+        echo 0 < $query?'1':'0';
+        die;
+    }
     /**
-     * Lista a actions cadastradas. 
+     * Lista a actions cadastradas.
      */
     public function actionsAction() {
         $post = json_decode(json_encode($_POST));
 
         $query = Doctrine_Query::create()
-//                ->select("*")
+            //    ->select("*")
                 ->from('Model_AclAction a')
         ;
 
@@ -167,7 +183,7 @@ class AclController {
             if(0 < $existe){
                 throw new Exception('Não é possível excluir papel que possua usuário vinculado!');
             }
-            
+
             // Exclui o vinculo com as permissões
             Doctrine_Query::create()
                     ->delete("Model_AclPapelPermissao")
@@ -256,7 +272,7 @@ class AclController {
                                     $oPai = Doctrine::getTable('Model_AclMenu')->findOneBy('texto', $pai->texto);
                                     if (!$oPai) {
                                         $oPai = new Model_AclMenu();
-//                                        $oPai->janela = $pai->janela;
+                                    //    $oPai->janela = $pai->janela;
                                         $oPai->texto = $pai->texto;
                                         $oPai->icone = $pai->icone;
                                         $oPai->save();
@@ -305,7 +321,7 @@ class AclController {
     }
 
     /**
-     * Lista as permissões cadastradas. 
+     * Lista as permissões cadastradas.
      */
     public function permissoesAction() {
         $post = json_decode(json_encode($_POST));
@@ -340,8 +356,8 @@ class AclController {
         //Executa com paginação
         $pager = new Doctrine_Pager(
                 $query, 1, 1000
-//                        $_POST['page_current'],
-//                        $_POST['page_maxsize']
+                    //    $_POST['page_current'],
+                    //    $_POST['page_maxsize']
         );
 
         $retorno = new Response($pager);
@@ -349,7 +365,7 @@ class AclController {
     }
 
     /**
-     * Lista os menus cadastrados. 
+     * Lista os menus cadastrados.
      */
     public function menusAction() {
         $post = json_decode(json_encode($_POST));
@@ -398,7 +414,7 @@ class AclController {
     }
 
     /**
-     * Lista os papéis cadastradas. 
+     * Lista os papéis cadastradas.
      */
     public function papeisAction() {
         $post = json_decode(json_encode($_POST));
@@ -439,7 +455,7 @@ class AclController {
     }
 
     /**
-     * Retorna a permissão referente ao ID informado. 
+     * Retorna a permissão referente ao ID informado.
      */
     public function lerpermissaoAction() {
         $post = $_POST;
@@ -462,7 +478,7 @@ class AclController {
     }
 
     /**
-     * Retorna o papel referente ao ID informado. 
+     * Retorna o papel referente ao ID informado.
      */
     public function lerpapelAction() {
         $post = json_decode(json_encode($_POST));
@@ -480,7 +496,7 @@ class AclController {
     }
 
     /**
-     * Salva uma action. 
+     * Salva uma action.
      */
     public function salvaractionAction() {
         $post = $_POST;
@@ -507,7 +523,7 @@ class AclController {
     }
 
     /**
-     * Salva uma permissao. 
+     * Salva uma permissao.
      */
     public function salvarpermissaoAction() {
         $dados = W3brUtils::getJson($_POST, 'dados');
@@ -558,7 +574,7 @@ class AclController {
     }
 
     /**
-     * Salva um item do menu. 
+     * Salva um item do menu.
      */
     public function salvarmenuAction() {
         $dados = $_POST;
@@ -658,7 +674,7 @@ class AclController {
     }
 
     /**
-     * Salva uma permissao. 
+     * Salva uma permissao.
      */
     public function salvarpapelAction() {
         $post = $_POST;

@@ -22,21 +22,22 @@ class LoginModule {
 //        $uri = $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
         $uri = W3br::getUri();
         if (isset($uri[0])
+                && (array_slice($uri,0,2) != Array("acl", "action"))
                 && ($uri != Array("login", "logar"))
                 && ($uri != Array("login", "as"))
                 && ($uri != Array("login", "sair"))
                 && ($uri[0] != "1.3")
                 && ($uri[0] != "a")
                 && $uri[0] != null
-                && ($uri != Array("sac", "incidencia", "email")) 
-                && ($uri != Array("helpdesk", "prestadores", "chamados")) 
+                && ($uri != Array("sac", "incidencia", "email"))
+                && ($uri != Array("helpdesk", "prestadores", "chamados"))
                 && ($uri != Array("helpdesk", "prestadores", "arquivos"))
                 && ($uri != Array("helpdesk", "chamados", "email"))) {
             if (!isset($_SESSION[APPLICATIONID])) {
                 $saida["login"] = 0;
                 echo json_encode($saida);
                 die;
-            } else { //if (isset($uri[0], $uri[1])) 
+            } else { //if (isset($uri[0], $uri[1]))
                 if (!self::checkUri(implode("_", $uri))) {
                     $saida["login"] = 1;
                     $saida["denied"] = 1;
