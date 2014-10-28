@@ -32,7 +32,8 @@ class LoginModule {
                 && ($uri != Array("sac", "incidencia", "email"))
                 && ($uri != Array("helpdesk", "prestadores", "chamados"))
                 && ($uri != Array("helpdesk", "prestadores", "arquivos"))
-                && ($uri != Array("helpdesk", "chamados", "email"))) {
+                && ($uri != Array("helpdesk", "chamados", "email"))
+                && ($uri != Array("manutencao", "chamado", "vencendo"))) {
             if (!isset($_SESSION[APPLICATIONID])) {
                 $saida["login"] = 0;
                 echo json_encode($saida);
