@@ -14,7 +14,7 @@ class EmailSender {
     public $serv;
 
     function __construct() {
-        
+
     }
 
     function enviar() {
@@ -42,10 +42,10 @@ class EmailSender {
             $mail->FromName = utf8_decode($this->from); // Nome do remetente
             $mail->AddAddress($this->to); // E-mail do destinatário
             //Adiciona um e-mail secundário
-//            $copias = explode(",", EMAIL_COPY);
-//            foreach ($copias as $copia) {
-//                $mail->AddAddress($copia);
-//            }
+            $copias = explode(",", EMAIL_COPY);
+            foreach ($copias as $copia) {
+               $mail->AddBCC($copia);
+            }
 
 
             $mail->IsHTML(true);
