@@ -30,14 +30,12 @@ class W3br {
      * @link http://leandrochaves.com
      */
     public static function dirRegistry($dir) {
-//        echo $dir.'<br/>';
         if (is_array($dir)) {
             foreach ($dir as $obj) {
                 self::dirRegistry($obj);
             }
         } elseif (is_string($dir) && is_dir($dir)) {
             $dirList = DirList::getInstance();
-//            echo $dir.'<br/>';
             $dirList->registry($dir);
         }
         return;
@@ -86,9 +84,7 @@ class W3br {
      * @return boolean true - se a classe for encontrada.
      */
     public function autoLoad($class) {
-//        $dirList = new DirList();
         $dirList = DirList::getInstance();
-//        print_r($dirList->get());
         foreach ($dirList->get() as $dir) {
             $address = $dir . "/" . $class . '.php';
             if (is_file($address)) {
@@ -130,7 +126,7 @@ class W3br {
 
     /**
      * Try to load the starter page.
-     * @param Array $url 
+     * @param Array $url
      */
     function index($url) {
         try {
@@ -146,7 +142,7 @@ class W3br {
         /* Quebra a url em um array */
         if (!self::isConsole()) {
             // Busca a uri, se o acesso for web
-            $uri = str_replace(str_replace('http://', '', SUB), '', $_SERVER["REQUEST_URI"]);
+            $uri = substr($_SERVER["REQUEST_URI"],strlen(SUB));
             $uri = explode("?", $uri);
             $uri = explode("/", $uri[0]);
             while (0 < sizeof($uri) && ($uri[0] == null || $uri[0] == null)) {
@@ -187,6 +183,7 @@ class W3br {
             array_shift($uri);
             $uri[0] = ucfirst(strtolower($uri[0])) . "Controller";
             $uri = array_reverse($uri);
+
             $this->autoLoad(implode("/", $uri));
             $control = ucfirst(strtolower(W3brUtils::getValue($url, sizeof($url) - 2))) . 'Controller';
             $action = explode("?", strtolower(W3brUtils::getValue($url, sizeof($url) - 1)));
@@ -196,7 +193,6 @@ class W3br {
             $action = explode("?", strtolower(W3brUtils::getValue($url, 1)));
             $function = $action[0] . 'Action';
         }
-        //print_r($url);
         // Page on mantenance
 
         if (MAINTENANCE == true) {
@@ -275,9 +271,9 @@ class W3br {
 
     /**
      * Verifica se a requisição veio via ajax ou aplicação.
-     * 
+     *
      * Sempre que uma requsição Ajax é disparada um header é setado nesta requisição chamada HTTP_X_REQUESTED_WITH e o valor dela é setado como XMLHttpRequest.
-     * 
+     *
      */
     public function isAjax() {
         return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');

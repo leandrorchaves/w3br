@@ -29,6 +29,7 @@ class LoginModule {
                 && ($uri[0] != "1.3")
                 && ($uri[0] != "a")
                 && $uri[0] != null
+                && ($uri != Array("h", "login", "logar"))
                 && ($uri != Array("sac", "incidencia", "email"))
                 && ($uri != Array("helpdesk", "prestadores", "chamados"))
                 && ($uri != Array("helpdesk", "prestadores", "arquivos"))
@@ -56,7 +57,6 @@ class LoginModule {
      */
     public static function checkUri($uri = NULL) {
         $action = strtolower($uri);
-
         $query = Doctrine_Query::create()
                 ->select("count(id) as existe")
                 ->from('Model_Usuarios u')

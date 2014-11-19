@@ -3,7 +3,7 @@
 /**
  * Module for manage doctrine ORM integration with W3br.
  * @package DoctrineModule
- * 
+ *
  * @author Leandro Chaves
  * @link http://leandrochaves.com
  */
