@@ -99,14 +99,20 @@ class UsuarioController {
                 ->delete("Model_UsuarioArmazem")
                 ->where("id_usuario = ?", $obj->id)
                 ->execute();
-        if (isset($post['armazem']) && $post['armazem'] != 0) {
-            $armazem = new Model_UsuarioArmazem();
-            $armazem->id_usuario = $obj->id;
-            $armazem->id_armazem = $post['armazem'];
-            $armazem->email = (boolean) $post['receber'];
-            $armazem->save();
+        if (isset($post['armazem']) && $post['armazem'] !== '[]') {
+            $armazens = json_decode($post['armazem']);
+            $ids = Array();
+            foreach ($armazens as $item) {
+                if(!in_array($item->id, $ids)) {
+                    $ids[] = $item->id;
+                    $armazem = new Model_UsuarioArmazem();
+                    $armazem->id_usuario = $obj->id;
+                    $armazem->id_armazem = $item->id;
+                    $armazem->email = (boolean) $post['receber'];
+                    $armazem->save();
+                }
+            }
         }
-
         // Atualiza o prestador ao qual o usuário está vinculado
         Doctrine_Query::create()
                 ->delete("Model_ManUsuarioPrestador")
@@ -155,8 +161,9 @@ class UsuarioController {
             if (isset($post->id)) {
                 $obj = Doctrine_Query::create()
                                 ->from('Model_Usuarios u')
-                                ->leftJoin("u.UsuarioArmazem")
                                 ->leftJoin("u.ManUsuarioPrestador")
+                                ->leftJoin("u.UsuarioArmazem ua")
+                                ->leftJoin("ua.Armazem")
                                 ->where("u.id = ?", $post->id)
                                 ->execute()->getFirst();
                 if ($obj) {
