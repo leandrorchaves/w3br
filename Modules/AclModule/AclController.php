@@ -2,6 +2,20 @@
 
 class AclController {
     public function actionAction($url){
+        if(isset($_REQUEST['action'])){
+            echo $this->checkHasAction($_REQUEST['action']);
+            die;
+        }else if(isset($_REQUEST['list'])){
+            $response = Array();
+            $list = json_decode($_REQUEST['list']);
+            foreach($list as $action){
+                $response[$action] = $this->checkHasAction($action);
+            }
+            echo json_encode($response);
+            die;
+        }
+    }
+    private function checkHasAction($action){
         $query = Doctrine_Query::create()
             ->from('Model_Usuarios u')
             ->leftJoin("u.AclPapel p")
@@ -11,12 +25,10 @@ class AclController {
             ->leftJoin("pa.AclAction a")
             ->leftJoin("pe.AclPermissaoMenu pm")
             ->leftJoin("pm.AclMenu m")
-            ->where("(a.nome = ? or m.janela = ?)", Array($_REQUEST['action'],$_REQUEST['action']))
+            ->where("(a.nome = ? or m.janela = ?)", Array($action, $action))
             ->andWhere('u.id = ?', $_SESSION[APPLICATIONID]['usuarioid'])
             ->count();
-            // ->execute(Doctrine_Core::HYDRATE_SINGLE_SCALAR);
-        echo 0 < $query?'1':'0';
-        die;
+        return (0 < $query) ? '1' : '0';
     }
     /**
      * Lista a actions cadastradas.
