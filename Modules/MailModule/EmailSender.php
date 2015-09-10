@@ -29,7 +29,7 @@ class EmailSender {
 //            return true;
 
             $mail = new PHPMailer();
-//            $mail->SetLanguage("br", DIR_RAIZ . "/www/add/phpmailer/"); // Linguagem
+//            $mail->SetLanguage("br", ROOT_DIR . "/www/add/phpmailer/"); // Linguagem
             $mail->SMTP_PORT = EMAIL_PORT; // Porta do SMTP
 //            $mail->SMTPSecure = EMAIL_SECURE; // Tipo de comunicação segura
 //            $mail->IsSMTP();

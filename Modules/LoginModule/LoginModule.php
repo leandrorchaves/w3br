@@ -43,6 +43,8 @@ class LoginModule {
                 if (!self::checkUri(implode("_", $uri))) {
                     $saida["login"] = 1;
                     $saida["denied"] = 1;
+                    $saida["uri"] = implode("/", $uri);
+                    $saida["app"] = APPLICATIONID;
                     echo json_encode($saida);
                     die;
                 }

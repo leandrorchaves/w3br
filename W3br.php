@@ -120,8 +120,8 @@ class W3br {
     }
 
     public static function loadFile($file) {
-        $file = DIR_RAIZ . ((preg_match('/\/$/', DIR_RAIZ)) ? $file : '/' . $file);
-        require_once $file;
+        $root = preg_match('/^\//', $file) ? '' : ROOT_DIR.'/';
+        require_once $root . $file;
     }
 
     /**
@@ -155,9 +155,9 @@ class W3br {
         return $uri;
     }
 
-    private static function getParamUri() {
+    public static function getParamUri() {
         $uri = Array();
-        if (0 < $_SERVER['argc']) {
+        if (1 < $_SERVER['argc']) {
             $uri = explode(':', $_SERVER['argv'][1]);
         }
         return $uri;
@@ -255,7 +255,7 @@ class W3br {
             W3BR_PATH . 'Includes',
             'www/Model');
         foreach ($dirs as $dir) {
-            self::dirRegistry(DIR_RAIZ . $dir);
+            self::dirRegistry(ROOT_DIR . $dir);
         }
         // through the list of registered starter functions
         $starterList = StarterList::getInstance();

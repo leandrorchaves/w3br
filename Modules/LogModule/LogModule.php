@@ -11,7 +11,7 @@ class LogModule {
     private static $instance;
     private static $time;
 
-    // O método singleton 
+    // O método singleton
     protected static function getInstance() {
         $class = __CLASS__;
         if (!isset(self::$instance)) {
@@ -30,7 +30,7 @@ class LogModule {
     }
 
     public static function log($text = '', $tipo = 'LOG', $dateFormat = 'd-m-Y H:i:s') {
-        $logFile = DIR_RAIZ . '/www/logs/access.' . date('Ymd') . '.txt';
+        $logFile = ROOT_DIR . '/logs/access.' . date('Ymd') . '.txt';
         $fp = fopen($logFile, 'a');
 
         if (!is_resource($fp)) {

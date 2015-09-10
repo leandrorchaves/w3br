@@ -56,8 +56,7 @@ class LoginController {
             ->leftJoin('up.ManPrestador p')
             ->where('u.login = ?', $post["login"])
             ->andWhere('u.senha = ?', sha1($post["senha"]))
-            // ->andWhere('status = 1');
-            // ->andWhere('(p.ativo == 1 OR p.ativo IS NULL)');
+            ->andWhere('u.status = 1')
         ;
         $resultado = $query->execute(Array(),Doctrine::HYDRATE_ARRAY);
         if (0 == sizeof($resultado)) {

@@ -70,7 +70,7 @@ class DoctrineController {
 
     private function parseLog() {
 
-        $log = fopen(DIR_RAIZ . 'logs/querys/' . date('Ymd') . '.txt', 'r');
+        $log = fopen(ROOT_DIR . 'logs/querys/' . date('Ymd') . '.txt', 'r');
         $hora = '';
         $url = '';
         $rows = Array();

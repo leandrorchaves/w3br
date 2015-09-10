@@ -27,7 +27,7 @@ class LogController {
 
     private function parseLog() {
 
-        $log = fopen(DIR_RAIZ . 'logs/access.' . date('Ymd') . '.txt', 'r');
+        $log = fopen(ROOT_DIR . 'logs/access.' . date('Ymd') . '.txt', 'r');
         $ip = '';
         $hora = '';
         $user = '';
