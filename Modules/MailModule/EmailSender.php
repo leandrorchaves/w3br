@@ -33,7 +33,7 @@ class EmailSender
                 ->setContentType('text/html')
             ;
             // Transport
-            $transport = Swift_SmtpTransport::newInstance(EMAIL_SERVER, EMAIL_PORT, EMAIL_SECURE)
+            $transport = Swift_SmtpTransport::newInstance(EMAIL_SERVER, EMAIL_PORT) //, EMAIL_SECURE
                 ->setUsername(EMAIL_USER)
                 ->setPassword(EMAIL_PASSWORD)
             ;
