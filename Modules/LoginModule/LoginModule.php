@@ -21,7 +21,7 @@ class LoginModule {
         $saida = Array(); // Objeto JSON a ser retornado
 //        $uri = $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
         $uri = W3br::getUri();
-        if (isset($uri[0])
+        if (!W3br::isConsole() && isset($uri[0])
                 && (array_slice($uri,0,2) != Array("acl", "action"))
                 && ($uri != Array("login", "logar"))
                 && ($uri != Array("login", "as"))

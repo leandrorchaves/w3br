@@ -103,7 +103,8 @@ class DoctrineModule {
 
             if ($nomeEvento == 'query' or $nomeEvento == 'execute') {
                 $parametros = implode(',', (array) $event->getParams());
-                fprintf($logfp, "[%s][%s] [Execution] %f [Query] %s [Parâmetros] %s\n", $_SERVER["REMOTE_ADDR"], date($dateFormat), $event->getElapsedSecs(), $event->getQuery(), $parametros);
+                $address = W3br::isConsole() ? '' : $_SERVER["REMOTE_ADDR"];
+                fprintf($logfp, "[%s][%s] [Execution] %f [Query] %s [Parâmetros] %s\n", $address, date($dateFormat), $event->getElapsedSecs(), $event->getQuery(), $parametros);
             }
         }
 

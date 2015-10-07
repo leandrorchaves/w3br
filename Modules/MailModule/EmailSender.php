@@ -40,6 +40,33 @@ class EmailSender
             $mailer = Swift_Mailer::newInstance($transport);
             $mailer->send($message);
 
+//             $mail = new PHPMailer();
+// //            $mail->SetLanguage("br", DIR_RAIZ . "/www/add/phpmailer/"); // Linguagem
+//            $mail->IsSMTP();
+//             $mail->SMTP_PORT = EMAIL_PORT; // Porta do SMTP
+//         //    $mail->SMTPSecure = EMAIL_SECURE; // Tipo de comunicação segura
+//            $mail->Host = EMAIL_SERVER;  // Endereço do servidor SMTP
+//            $mail->SMTPAuth = true; // Requer autenticação?
+//            $mail->Username = EMAIL_USER; // Usuário SMTP
+//            $mail->Password = EMAIL_PASSWORD; // Senha do usuário SMTP
+//             // $mail->IsMail();
+//             $mail->From = EMAIL_ADDR; // E-mail do remetente
+//             $mail->FromName = utf8_decode($this->from); // Nome do remetente
+//
+//             $mail->SetFrom(EMAIL_ADDR, TITLE);
+//             $mail->Subject = utf8_decode($this->subject);
+//             $mail->MsgHTML(utf8_decode($this->body)); //EmailsController::removerAcentos($this->body);
+//             $mail->AddAddress($this->to); // E-mail do destinatário
+//
+//             //Adiciona um e-mail secundário
+//             $copias = explode(",", EMAIL_COPY);
+//             foreach ($copias as $copia) {
+//                $mail->AddBCC($copia);
+//             }
+//
+
+            // $retorno = $mail->Send();
+
             ob_end_clean();
 
             return true;
